@@ -48,31 +48,31 @@ We would just need to reactively maintain centralized metrics based on the infor
 `/v1.0/transaction/*:txHash*?withResults=true`
 > withResults outputs also smart-contrac related events
 
-`transaction/:*txHash*?sender=*:senderAddress*&withResults=true`
+`/v1.0/transaction/:*txHash*?sender=*:senderAddress*&withResults=true`
 > Having the sender speeds up the process, as only one shard observer will be used
 
 
 ## Sample pseudocode
 ```python
 def process(tx):
-    results = get(f'transaction/{tx["hash"]}?sender={tx["sender"]}*&withResults=true')
+    results = get(f'/v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
     
     # Parse results, look for events
 
 def fetch(nonce):
-    block = get(f'hyperblock/by-nonce/{nonce})'
+    block = get(f'/v1.0/hyperblock/by-nonce/{nonce})'
     for tx in block['transactions']:
         if tx['receiver'] == OUR_SMART_CONTRACT_ADDRESS:
             process(tx)
 
 def main():
-    lastNonce = get(f'network/status/4294967295')
-    fetch(lastNonce)
+    lastNonce = db.getLastNonce()
 
     while True:
-        nonce = get(f'network/status/4294967295')
+        nonce = get(f'/v1.0/network/status/4294967295')
         for currentNonce in range(lastNonce, nonce):
             fetch(currentNonce)
         
         lastNone = nonce
+        db.saveLastNonce(nonce)
 ```
