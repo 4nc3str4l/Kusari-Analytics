@@ -16,7 +16,7 @@ Smart contract does not hold much logic, it serves as an endpoint we can watch. 
 
     * We can't use any data that is stored in the smart contract, as by the time we are up, it might have changed
 
-## Backbones
+## Overview
 
 The contract would server as an API
 
