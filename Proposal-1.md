@@ -60,7 +60,7 @@ def process(tx):
     # Parse results, look for events
 
 def fetch(nonce):
-    block = get(f'/v1.0/hyperblock/by-nonce/{nonce})'
+    block = get(f'/v1.0/hyperblock/by-nonce/{nonce}')
     for tx in block['transactions']:
         if tx['receiver'] == OUR_SMART_CONTRACT_ADDRESS:
             process(tx)
@@ -73,6 +73,6 @@ def main():
         for currentNonce in range(lastNonce, nonce):
             fetch(currentNonce)
         
-        lastNone = nonce
+        lastNonce = nonce
         db.saveLastNonce(nonce)
 ```
