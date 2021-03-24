@@ -19,20 +19,21 @@ CONFIG = {
     'smart_contract_address': None
 }
 
-def url(path):
-    return f'http://{CONFIG["server_ip"]}:{CONFIG["server_port"]}/{path}'
+def get(path):
+    url = f'http://{CONFIG["server_ip"]}:{CONFIG["server_port"]}/{path}'
+    return requests.get(url).json()
 
 
 def process(tx):
     logger.info('Processing %s', tx)
-    resp = requests.get(url(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')).json()
+    resp = get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
     
     # Parse results, look for events
 
 def fetch(nonce):
     logger.info('Fetching %d', nonce)
 
-    resp = requests.get(url(f'v1.0/hyperblock/by-nonce/{nonce}')).json()
+    resp = get(f'v1.0/hyperblock/by-nonce/{nonce}')
     for tx in resp['data']['hyperblock']['transactions']:
         logger.debug('\tHas tx %s', tx['hash'])
         if tx['receiver'] == CONFIG['smart_contract_address']:
@@ -53,12 +54,12 @@ def main():
 
     lastNonce = None #db.getLastNonce()
     if not lastNonce:
-        resp = requests.get(url('v1.0/network/status/4294967295')).json()
+        resp = get('v1.0/network/status/4294967295')
         lastNonce = resp['data']['status']['erd_highest_final_nonce']
     
 
     while True:
-        resp = requests.get(url('v1.0/network/status/4294967295')).json()
+        resp = get('v1.0/network/status/4294967295')
         nonce = resp['data']['status']['erd_highest_final_nonce']
 
         for currentNonce in range(lastNonce + 1, nonce + 1):
