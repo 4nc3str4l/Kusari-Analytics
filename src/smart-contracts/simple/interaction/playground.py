@@ -72,6 +72,20 @@ if __name__ == '__main__':
             chain=chain,
             version=tx_version
         )
+    
+    def register_visit():
+        data = environment.execute_contract(
+            contract=contract,
+            caller=user,
+            function="register_visit",
+            gas_price=gas_price,
+            gas_limit=50000000,
+            value=None,
+            chain=chain,
+            version=tx_version
+        )
+        print(data)
+
 
     user.sync_nonce(ElrondProxy(args.proxy))
 
@@ -80,6 +94,7 @@ if __name__ == '__main__':
         print("1. Deploy")
         print("2. Query getSum()")
         print("3. Add()")
+        print("4. Register Visit()")
 
         try:
             choice = int(input("Choose:\n"))
@@ -94,4 +109,7 @@ if __name__ == '__main__':
         elif choice == 3:
             number = int(input("Enter number:"))
             environment.run_flow(lambda: add_flow(number))
+            user.nonce += 1
+        elif choice == 4:
+            environment.run_flow(lambda: register_visit)
             user.nonce += 1
