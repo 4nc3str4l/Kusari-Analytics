@@ -1,19 +1,28 @@
 {
   "name": "kusari-analitycs",
   "version": "0.0.1",
-  "description": "",
-  "scripts": {
-    "build": "webpack",
-    "dev": "webpack --watch"
+  "description": "Analytics platform for the elrond blockchain.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4nc3str4l/Kusari-Analytics.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "build": "webpack --mode='production'",
+    "dev": "webpack --watch --mode='development'"
+  },
+  "keywords": [
+    "Elrond",
+    "EGLD",
+    "Blockchain",
+    "Analitycs"
+  ],
+  "author": "Kusari",
+  "license": "GPL 3.0",
   "dependencies": {
-    "@babel/core": "7.8.3",
-    "@babel/preset-env": "7.8.7",
-    "@babel/preset-react": "7.8.3",
-    "babel-loader": "8.0.6",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
     "chart.js": "^2.9.4",
     "css-loader": "5.2.0",
     "node-sass": "5.0.0",
@@ -23,9 +32,7 @@
     "redux": "4.0.5",
     "redux-thunk": "2.3.0",
     "sass-loader": "11.0.1",
-    "style-loader": "2.0.0",
-    "webpack": "5.28.0",
-    "webpack-cli": "4.6.0"
+    "style-loader": "2.0.0"
   },
   "babel": {
     "presets": [
@@ -36,7 +43,9 @@
   "devDependencies": {
     "html-loader": "2.1.2",
     "html-webpack-plugin": "5.3.1",
-    "prop-types": "15.7.2"
+    "prop-types": "15.7.2",
+    "webpack": "5.28.0",
+    "webpack-cli": "4.6.0"
   },
   "resolutions": {
     "@babel/preset-env": "7.8.7"

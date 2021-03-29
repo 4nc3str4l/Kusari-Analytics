@@ -2,8 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        "app": path.resolve(__dirname, "./src/js/main.js"),
-        "style": path.resolve(__dirname, "./src/scss/main.js"),
+        "kusari": path.resolve(__dirname, "./src/js/main.js"),
     },
     devtool: 'source-map',
     module: {
@@ -32,7 +31,7 @@ module.exports = {
         extensions: ['*', '.js', '.scss', '.css', '.jsx']
       },
     output: {
-        path: path.resolve(__dirname, "../backend/static/dist"),
+        path: path.resolve(__dirname, "./src/dist"),
         filename: "[name]-bundle.js"
     }
 };
