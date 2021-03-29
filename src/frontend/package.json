@@ -7,8 +7,8 @@
     "url": "https://github.com/4nc3str4l/Kusari-Analytics.git"
   },
   "scripts": {
-    "build": "webpack",
-    "dev": "webpack --watch"
+    "build": "webpack --mode='production'",
+    "dev": "webpack --watch --mode='development'"
   },
   "keywords": [
     "Elrond",
