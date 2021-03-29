@@ -11,7 +11,7 @@ class Kusari extends Component {
     }
 
     render(){
-        return("Hello Elrond!");
+        return(<h1>Hello Elrond!</h1>);
     }
 }
 
