@@ -1,0 +1,89 @@
+version: "3.7"
+services:
+  data-mining:
+    build: 
+      context: data-mining/
+      dockerfile: Dockerfile
+    volumes:
+      - ./data-mining/src:/opt/app/src
+    depends_on:
+      - mongo-data-mining
+      - rabbit
+    networks:
+      - backend
+
+  websocket-backend:
+    build: 
+      context: websocket-backend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./websocket-backend/src:/opt/app/src
+    depends_on:
+      - mongo-websocket-backend
+      - rabbit
+    networks:
+      - backend
+      
+  frontend:
+    build: 
+      context: frontend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/src:/opt/app/src
+    depends_on:
+      - websocket-backend
+    networks:
+      - backend
+
+  mongo-data-mining:
+    image: "mongo:3.4"
+    volumes:
+      - data-mining-data:/data/db
+    expose:
+      - 27017
+    networks:
+      - backend
+
+  mongo-websocket-backend:
+    image: "mongo:3.4"
+    volumes:
+      - websocket-backend-data:/data/db
+    expose:
+      - 27017
+    networks:
+      - backend
+
+  rabbit:
+    image: rabbitmq:3.8.14
+    hostname: rabbit
+    container_name: rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    expose:
+      - 5672
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:1.19.8
+    volumes:
+      - ./frontend/src/dist:/usr/share/nginx/html
+    ports:
+      - 8080:80
+    depends_on: 
+      - frontend
+
+networks:
+  backend:
+    driver: bridge
+    name: backend
+  results:
+    internal: true
+    name: results
+
+volumes:
+  data-mining-data:
+    driver: local
+  websocket-backend-data:
+    driver: local
