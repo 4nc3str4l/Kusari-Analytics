@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const address = "0.0.0.0:27017"
+const address = "0.0.0.0:1212"
 
 var addr = flag.String("addr", address, "http service address")
 
