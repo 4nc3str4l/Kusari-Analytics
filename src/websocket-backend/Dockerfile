@@ -8,4 +8,4 @@ RUN go get -u github.com/gorilla/websocket
 
 WORKDIR /opt/app/src
 
-ENTRYPOINT ["go", "run", "/opt/app/src/main.go"]
+ENTRYPOINT ["go", "run", "."]
