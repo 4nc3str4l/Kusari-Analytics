@@ -1,8 +1,13 @@
-FROM python:3.9.2-alpine3.13
+FROM golang:1.16.2-buster
 
 RUN mkdir -p /opt/app/src
-ADD requirements.txt /opt/app/requirements.txt
-RUN pip3 install -r /opt/app/requirements.txt
+ENV GOBIN /go/bin
+
+RUN go env -w GO111MODULE=auto
+RUN go get -u github.com/gorilla/websocket
+
 WORKDIR /opt/app/src
 
-ENTRYPOINT ["python3", "-u", "/opt/app/src/main.py"]
+ENTRYPOINT ["go", "run", "/opt/app/src/main.go"]
+
+EXPOSE 1212

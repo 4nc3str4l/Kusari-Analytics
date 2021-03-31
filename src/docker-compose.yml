@@ -54,6 +54,8 @@ services:
       - 27017
     networks:
       - backend
+    ports: 
+      - 1212:1212
 
   rabbit:
     image: rabbitmq:3.8.14
