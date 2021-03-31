@@ -1,3 +1,4 @@
 .vscode
 src/dist
 node_modules
+.idea
