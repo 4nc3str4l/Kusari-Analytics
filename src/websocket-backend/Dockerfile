@@ -9,5 +9,3 @@ RUN go get -u github.com/gorilla/websocket
 WORKDIR /opt/app/src
 
 ENTRYPOINT ["go", "run", "/opt/app/src/main.go"]
-
-EXPOSE 1212

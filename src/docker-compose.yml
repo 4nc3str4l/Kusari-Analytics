@@ -23,6 +23,8 @@ services:
     depends_on:
       - mongo-websocket-backend
       - rabbit
+    ports: 
+      - 1212:1212
     networks:
       - backend
       
@@ -32,8 +34,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/src:/opt/app/src
-    ports: 
-      - 1212:1212
     depends_on:
       - websocket-backend
     networks:
