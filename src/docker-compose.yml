@@ -9,6 +9,8 @@ services:
     depends_on:
       - mongo-data-mining
       - rabbit
+    env_file:
+      - data-mining-config.env
     networks:
       - backend
 
