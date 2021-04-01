@@ -14,7 +14,7 @@ class Kusari extends Component {
     render(){
         return(
             <Fragment>
-                <h1>Hello Elrond</h1>
+                <h1>Kusari Analytics</h1>
                 <GeneralStats/>
             </Fragment>
 

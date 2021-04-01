@@ -26,7 +26,7 @@ class GeneralStats extends Component {
         let packet = JSON.parse(message.data);
         this.setState({
             ...this.state,
-            currentBlock: packet.block_num
+            currentBlock: packet.nonce
         })
     }
 

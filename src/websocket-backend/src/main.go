@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
-	"time"
 )
 
 const address = "0.0.0.0:1212"
@@ -32,25 +32,31 @@ func GeneralStats(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-
 }
 
-type GeneralInfo struct {
-	BlockNumber      int    `json:"block_num"`
+type NonceMessage struct {
+	Type string `json:"type"`
+	Data NonceData `json:"data"`
 }
 
-func UpdateGeneralStats() {
+type NonceData struct {
+	Nonce uint64 `json:"nonce"`
+}
+
+func UpdateGeneralStats(messages chan []byte) {
 	generalStatsListeners.initialize()
-	gi := GeneralInfo{0}
+	var f NonceMessage
 	for {
+		msg := <- messages
+		json.Unmarshal(msg, &f)
 		generalStatsListeners.listenersMux.RLock()
 		for ws, _ := range generalStatsListeners.listeners {
-			_ = ws.WriteJSON(gi)
+			_ = ws.WriteJSON(f.Data)
 		}
 		generalStatsListeners.listenersMux.RUnlock()
 		generalStatsListeners.removeDisconnected()
-		gi.BlockNumber++
-		time.Sleep(1 * time.Second)
+
+		log.Printf("Received blocknumber: %d", f.Data.Nonce)
 	}
 }
 
@@ -61,6 +67,13 @@ func main() {
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
 	log.Printf("Websocket Server running in %s\n", address)
-	go UpdateGeneralStats()
+
+	messages := make(chan []byte)
+
+	// send something to this channel to stop some loops
+	closing := make(chan bool)
+
+	go SetupRabbitMQ(messages, closing)
+	go UpdateGeneralStats(messages)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 }
