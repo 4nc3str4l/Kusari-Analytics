@@ -3,6 +3,8 @@
 import '../scss/style.scss';
 
 import React, {Component, Fragment} from "react";
+
+import TopMenu from "./TopMenu";
 import GeneralStats from "./GeneralStats";
 
 class Kusari extends Component {
@@ -14,10 +16,9 @@ class Kusari extends Component {
     render(){
         return(
             <Fragment>
-                <h1>Kusari Analytics</h1>
+                <TopMenu />
                 <GeneralStats/>
             </Fragment>
-
         );
     }
 }

@@ -10,7 +10,6 @@ class GeneralStats extends Component {
 
     constructor(props){
         super(props);
-
         this.state = {
             currentBlock: 0
         }
