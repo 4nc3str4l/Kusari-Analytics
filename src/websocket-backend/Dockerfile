@@ -5,7 +5,8 @@ ENV GOBIN /go/bin
 
 RUN go env -w GO111MODULE=auto
 RUN go get -u github.com/gorilla/websocket
+RUN go get -u github.com/streadway/amqp
 
 WORKDIR /opt/app/src
 
-ENTRYPOINT ["go", "run", "/opt/app/src/main.go"]
+ENTRYPOINT ["go", "run", "."]

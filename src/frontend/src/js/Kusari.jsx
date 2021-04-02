@@ -3,6 +3,7 @@
 import '../scss/style.scss';
 
 import React, {Component, Fragment} from "react";
+import GeneralStats from "./GeneralStats";
 
 class Kusari extends Component {
     
@@ -11,7 +12,13 @@ class Kusari extends Component {
     }
 
     render(){
-        return(<h1>Hello Elrond</h1>);
+        return(
+            <Fragment>
+                <h1>Kusari Analytics</h1>
+                <GeneralStats/>
+            </Fragment>
+
+        );
     }
 }
 

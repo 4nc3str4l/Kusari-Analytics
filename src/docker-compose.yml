@@ -69,6 +69,8 @@ services:
       - 5672
     networks:
       - backend
+    ports:
+      - 5672:5672
 
   nginx:
     image: nginx:1.19.8
