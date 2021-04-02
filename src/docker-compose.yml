@@ -48,12 +48,13 @@ services:
     networks:
       - backend
 
-  mongo-websocket-backend:
-    image: "mongo:3.4"
+  postgres-websocket-backend:
+    image: "postgres:13.2"
     volumes:
-      - websocket-backend-data:/data/db
-    expose:
-      - 27017
+      - websocket-backend-data:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       - backend
 
