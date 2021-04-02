@@ -12,8 +12,15 @@ func failOnError(err error, msg string) {
 }
 
 func SetupRabbitMQ(messages chan []byte, closing chan bool) {
+	// Try to connect from outside
 	conn, err := amqp.Dial("amqp://user:password@localhost:5672/")
-	failOnError(err, "Failed to connect to RabbitMQ")
+
+	// If we fail we can try to connect to the rabbit mq inside the docker
+	if err != nil {
+		conn, err = amqp.Dial("amqp://user:password@rabbit:5672/")
+		failOnError(err, "Failed to connect to RabbitMQ")
+	}
+
 	defer conn.Close()
 
 	ch, err := conn.Channel()
