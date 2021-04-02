@@ -13,8 +13,8 @@ class TopMenu extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg">
-                <a className="navbar-brand" href="#"><span class="kusari-logo">鎖</span> Kusari Analytics</a>
+            <nav className="navbar navbar-expand-lg" id="kusari-top-menu">
+                <a className="navbar-brand" href="#"><span className="kusari-logo">鎖</span> Kusari Analytics</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
                         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -25,7 +25,6 @@ class TopMenu extends Component {
                         {this.renderSectionList()}
                     </ul>
                 </div>
-
             </nav>
         );
     }

@@ -5,7 +5,7 @@ import '../scss/style.scss';
 import React, {Component, Fragment} from "react";
 
 import TopMenu from "./TopMenu";
-import GeneralStats from "./GeneralStats";
+import GeneralStats from "./general-stats/GeneralStats";
 
 class Kusari extends Component {
     
@@ -17,7 +17,9 @@ class Kusari extends Component {
         return(
             <Fragment>
                 <TopMenu />
-                <GeneralStats/>
+                <div className={"content"}>
+                    <GeneralStats/>
+                </div>
             </Fragment>
         );
     }

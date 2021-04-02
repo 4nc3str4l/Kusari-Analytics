@@ -11,10 +11,54 @@ a{
     color: white;
 }
 
+.content {
+    padding: 10px 30px;
+}
+
+/**
+ TOP MENU
+ */
+
+#kusari-top-menu {
+    background-image: radial-gradient(farthest-corner at 45px 45px , rgb(6, 10, 16) 0%, rgb(14, 19, 29) 100%);
+    margin-bottom: 10px;
+}
+
 .kusari-logo {
     border-radius: 5px;
     padding: 6px;
     font-size: 1.2rem;
     font-weight: 500;
     color: white;
+}
+
+/**
+ GENERAL STATS
+ */
+
+.kusari-card {
+    background-color: rgb(14, 19, 29);
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    position: relative;
+    height: 80px;
+    min-width: 140px;
+}
+
+.kusari-card-title {
+    font-size: 1rem;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.kusari-card-value {
+    font-size: 1.5rem;
+}
+
+.kusari-card-logo {
+    position: absolute;
+    font-size: 25px;
+    right: 50px;
+    top: 25px;
 }
