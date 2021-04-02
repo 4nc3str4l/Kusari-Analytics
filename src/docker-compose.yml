@@ -21,7 +21,7 @@ services:
     volumes:
       - ./websocket-backend/src:/opt/app/src
     depends_on:
-      - mongo-websocket-backend
+      - postgres-websocket-backend
       - rabbit
     ports: 
       - 1212:1212
