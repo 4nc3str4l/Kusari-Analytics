@@ -6,6 +6,7 @@ import React, {Component, Fragment} from "react";
 
 import TopMenu from "./TopMenu";
 import GeneralStats from "./general-stats/GeneralStats";
+import Economics from "./economics/Economics";
 
 class Kusari extends Component {
     
@@ -19,6 +20,7 @@ class Kusari extends Component {
                 <TopMenu />
                 <div className={"content"}>
                     <GeneralStats/>
+                    <Economics />
                 </div>
             </Fragment>
         );

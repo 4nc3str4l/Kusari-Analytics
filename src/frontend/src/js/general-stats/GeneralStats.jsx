@@ -5,7 +5,7 @@ import ReconnectingWebsocket from 'reconnecting-websocket';
 import React, {Component, Fragment} from "react";
 
 import {EP_GENERAL_STATS} from "../constants";
-import TopCard from "./TopCard";
+import TopCard from "../components/TopCard";
 
 const price = require('crypto-price');
 

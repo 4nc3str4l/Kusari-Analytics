@@ -29,5 +29,4 @@ TopCard.propTypes = {
     value: PropTypes.string.isRequired,
     logo: PropTypes.object.isRequired,
     explanation: PropTypes.string.isRequired,
-
 }
