@@ -159,17 +159,17 @@ class Economics extends Component {
                         <h4>Latest Wale Transactions (24h)</h4>
                         <br />
                         <DataTable
-                            titles={["Timestamp", "Amount (EGLD)", "Tx Id"]}
+                            titles={["", "Timestamp", "Amount (EGLD)", "Tx Id"]}
                             contents={[
-                                ["15:59:23", "10'000", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
-                                ["19:12:23", "2'050", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>]]}
+                                ["#1", "15:59:23", "10'000", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#2", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#3", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#4", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#5", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#6", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#7", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#8", "16:12:23", "3'030", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>],
+                                ["#9", "19:12:23", "2'050", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>]]}
                         />
                     </div>
 
@@ -177,13 +177,13 @@ class Economics extends Component {
                         <h4>Most Active Addresses (24h)</h4>
                         <br />
                         <DataTable
-                            titles={["Address", "Num Transactions", "EGLD Balance"]}
+                            titles={["","Address", "Num Transactions", "EGLD Balance"]}
                             contents={[
-                                [<a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
-                                [<a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
-                                [<a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
-                                [<a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
-                                [<a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"]]}
+                                ["#1", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
+                                ["#2", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
+                                ["#3", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
+                                ["#4", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"],
+                                ["#5", <a href={"https://explorer.elrond.com/transactions/047e71625b0789fcfdcb008e48f2e10c77359fb176d33c6e6c5980146321cb6b"}>047e71625b...cb6</a>, "15'232", "123'123"]]}
                         />
                     </div>
                 </div>
