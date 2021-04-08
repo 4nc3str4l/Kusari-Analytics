@@ -4,6 +4,13 @@ from .blockchain import Blockchain
 import time
 
 
+def roll_list(lst: list, now: float):
+    lst.append(now)
+
+    while lst[0] < now - 60 * 60 * 24:
+        lst.pop(0)
+
+
 class Metrics(object):
     def __init__(self, blockchain: Blockchain):
         self.sender = MessageSender(host='rabbit', queues=('kusari', 'metrics'))
@@ -18,18 +25,12 @@ class Metrics(object):
     def on_block(self, block):
         # TODO(gpascualg): Take block time instead of local?
         now = time.time()
-        self.rolling_24_blocks.append(now)
-
-        while self.rolling_24_blocks[0] < now - 60 * 60 * 24:
-            self.rolling_24_blocks.pop(0)
+        roll_list(self.rolling_24_blocks, now)
         
     def on_tx(self, tx):
         # TODO(gpascualg): Take transaction time instead of local?
         now = time.time()
-        self.rolling_24_txs.append(now)
-
-        while self.rolling_24_txs[0] < now - 60 * 60 * 24:
-            self.rolling_24_txs.pop(0)
+        roll_list(self.rolling_24_txs, now)
         
     def publish(self, block):
         self.sender.send('metrics', {
