@@ -8,29 +8,30 @@ from .singleton import Singleton
 
 
 class MessageSender(object, metaclass=Singleton):
-    def __init__(self, host, queue):
+    def __init__(self, host, queues):
         credentials = pika.PlainCredentials('user', 'password')
-        self.queue = queue
         self.msgs = Queue()
-        self.thread = Thread(target=self.run, args=(credentials, host, queue))
+        self.thread = Thread(target=self.run, args=(credentials, host, queues))
         self.thread.start()
         
-    def run(self, credentials, host, queue):
+    def run(self, credentials, host, queues):
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=host, credentials=credentials)
         )
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue=queue)
+        for queue in queues:
+            self.channel.queue_declare(queue=queue)
         self.channel.confirm_delivery()
 
         while True:
             try:
-                msg = self.msgs.get(False)
-                if msg is None:
+                data = self.msgs.get(False)
+                if data is None:
                     self.connection.close()
                     break
                 else:
-                    self.channel.basic_publish(exchange='', routing_key=self.queue, body=msg)
+                    queue, msg = data
+                    self.channel.basic_publish(exchange='', routing_key=queue, body=msg)
             except Empty:
                 pass
 
@@ -39,5 +40,5 @@ class MessageSender(object, metaclass=Singleton):
             except:
                 break
     
-    def send(self, data):
-        self.msgs.put(json.dumps(data))
+    def send(self, queue, data):
+        self.msgs.put((queue, json.dumps(data)))
