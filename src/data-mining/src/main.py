@@ -13,9 +13,9 @@ def main():
         os.environ.get('SERVER_PORT', None)
     )
 
-    sender = MessageSender(host='rabbit', queues=['kusari', 'metrics'])
+    sender = MessageSender(host='rabbit', queues=('kusari', 'metrics'))
     
-    blockchain.add_block_callback(lambda block: sender.send('metrics', {
+    blockchain.add_block_callback(lambda block: sender.send('kusari', {
         'type': 'nonce',
         'data': {
             'nonce': block['data']['hyperblock']['nonce']

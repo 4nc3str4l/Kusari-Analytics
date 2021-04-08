@@ -3,7 +3,7 @@ from .singleton import ThreadedSingleton
 from pymongo import MongoClient
 
 
-class Database(object, meta=ThreadedSingleton):
+class Database(object, metaclass=ThreadedSingleton):
     def __init__(self):
         self.client = MongoClient('mongo-data-mining')
         self.db = self.client.kusari
