@@ -10,10 +10,14 @@ class Blockchain(object):
         self.server_ip = server_ip
         self.server_port = server_port
         self._on_block = []
+        self._after_block = []
         self._on_tx = []
 
     def add_block_callback(self, callback):
         self._on_block.append(callback)
+
+    def add_after_block_callback(self, callback):
+        self._after_block.append(callback)
     
     def add_tx_callback(self, callback):
         self._on_tx.append(callback)
@@ -49,6 +53,9 @@ class Blockchain(object):
         for tx in resp['data']['hyperblock']['transactions']:
             logger.debug('\tHas tx %s', tx['hash'])
             self.process(tx)
+
+        for callback in self._after_block:
+            callback(resp)
 
     def run(self):
         lastNonce = Database().get_last_nonce()
