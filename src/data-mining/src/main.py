@@ -5,7 +5,7 @@ import logging
 import os
 
 from lib.blockchain import Blockchain
-from lib.metrics import Metrics
+from lib.transactions import Transactions
 from lib.sender import MessageSender
 
 
@@ -17,7 +17,7 @@ def main():
     )
 
     # Create a queue and register a block callback
-    sender = MessageSender(host='rabbit', queues=('kusari', 'metrics'))
+    sender = MessageSender(host='rabbit', queues=('kusari', 'transactions'))
     blockchain.add_block_callback(lambda block: sender.send('kusari', {
         'type': 'nonce',
         'data': {
@@ -25,8 +25,8 @@ def main():
         }
     }))
 
-    # Create the metrics service
-    Metrics(blockchain)
+    # Create the transactions service
+    Transactions(blockchain)
     
     # Indefinitely block
     blockchain.run()

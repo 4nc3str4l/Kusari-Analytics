@@ -11,7 +11,7 @@ func failOnError(err error, msg string) {
 	}
 }
 
-func SetupRabbitMQ(messages chan []byte, closing chan bool) {
+func SetupRabbitMQ(chBlockNumber chan []byte, chTransactions chan []byte, closing chan bool) {
 	// Try to connect from outside
 	conn, err := amqp.Dial("amqp://user:password@localhost:5672/")
 
@@ -27,8 +27,8 @@ func SetupRabbitMQ(messages chan []byte, closing chan bool) {
 	failOnError(err, "Failed to open a channel")
 	defer ch.Close()
 
-	go subscribeToQueue(ch, "kusari", messages)
-
+	go subscribeToQueue(ch, "kusari", chBlockNumber)
+	go subscribeToQueue(ch, "transactions", chTransactions)
 
 	<-closing
 }

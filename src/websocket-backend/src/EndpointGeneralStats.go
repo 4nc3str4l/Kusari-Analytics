@@ -15,11 +15,11 @@ type NonceData struct {
 	Nonce uint64 `json:"nonce"`
 }
 
-func UpdateGeneralStats(messages chan []byte) {
+func UpdateGeneralStats(chBlockNumber chan []byte) {
 	generalStatsListeners.initialize()
 	var f NonceMessage
 	for {
-		msg := <- messages
+		msg := <- chBlockNumber
 		json.Unmarshal(msg, &f)
 		generalStatsListeners.listenersMux.RLock()
 		for ws, _ := range generalStatsListeners.listeners {

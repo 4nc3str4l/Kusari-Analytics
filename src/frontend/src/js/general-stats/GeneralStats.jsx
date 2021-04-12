@@ -92,6 +92,7 @@ class GeneralStats extends Component {
                          explanation={"Number of deployed smart contracts"}
                     />
 
+
                 </div>
             </Fragment>
         );

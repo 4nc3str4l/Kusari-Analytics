@@ -11,9 +11,9 @@ def roll_list(lst: list, now: float):
         lst.pop(0)
 
 
-class Metrics(object):
+class Transactions(object):
     def __init__(self, blockchain: Blockchain):
-        self.sender = MessageSender(host='rabbit', queues=('kusari', 'metrics'))
+        self.sender = MessageSender(host='rabbit', queues=('kusari', 'transactions'))
 
         self.rolling_24_blocks = []
         self.rolling_24_txs = []
@@ -33,7 +33,7 @@ class Metrics(object):
         roll_list(self.rolling_24_txs, now)
         
     def publish(self, block):
-        self.sender.send('metrics', {
+        self.sender.send('transactions', {
             'type': 'after-block',
             'data': {
                 'rolling_24_blocks': len(self.rolling_24_blocks),
