@@ -48,11 +48,17 @@ class Database(object, metaclass=ThreadedSingleton):
             }
         })
 
-    def get_top_holder_at_position(self, position):
+    def get_top_holders_from_position(self, position):
         cursor = self.db.addresses.find({
             'balance': {
                 '$gt': 0
             }
-        }).sort({'balance': pymongo.DESCENDING}).skip(position - 1).limit(1)
+        }).sort({'balance': pymongo.DESCENDING}).skip(position - 1)
+        return cursor
 
+    def get_top_holder_at_position(self, position):
+        cursor = self.get_top_holders_from_position(position).limit(1)
         return next(cursor, None)
+
+    def get_top_holders(self, maximum):
+        return self.get_top_holders_from_position(1).limit(maximum)

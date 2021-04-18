@@ -56,14 +56,17 @@ class Transactions(object):
         roll_list(self.rolling_24_txs, now, ROLL_24H)
         roll_list(self.rolling_1_txs, now, ROLL_1H)
 
-        # TODO(gpascualg): Which TX types do we have?
-        print(tx)
+        # TODO(gpascualg): Which TX types do we have? [normal, ?]
         tx_type = tx['data']['transaction']['type']
+        
         if tx_type not in self.rolling_24_txs_by_type:
-            self.rolling_24_txs_by_type = []
+            self.rolling_24_txs_by_type[tx_type] = []
+        
+        if tx_type not in self.rolling_1_txs_by_type:
+            self.rolling_1_txs_by_type[tx_type] = []
 
-        roll_list(self.rolling_24_txs_by_type[tx_type], nows, ROLL_24H)
-        roll_list(self.rolling_1_txs_by_type[tx_type], nows, ROLL_1H)
+        roll_list(self.rolling_24_txs_by_type[tx_type], now, ROLL_24H)
+        roll_list(self.rolling_1_txs_by_type[tx_type], now, ROLL_1H)
         
     def publish(self, block):
         self.sender.send('transactions', {

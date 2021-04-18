@@ -7,6 +7,8 @@ from queue import Queue, Empty
 from .singleton import Singleton
 
 
+DECL_QUEUES = ('kusari', 'transactions', 'wealth')
+
 class MessageSender(object, metaclass=Singleton):
     def __init__(self, host, queues):
         credentials = pika.PlainCredentials('user', 'password')

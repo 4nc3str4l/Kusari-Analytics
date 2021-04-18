@@ -13,6 +13,12 @@ class Blockchain(object):
         self._after_block = []
         self._on_tx = []
 
+        # Retrieve last nonce already
+        self.last_nonce = Database().get_last_nonce()
+        if not self.last_nonce:
+            resp = self.get('v1.0/network/status/4294967295')
+            self.last_nonce = resp['data']['status']['erd_highest_final_nonce']
+
     def add_block_callback(self, callback):
         self._on_block.append(callback)
 
@@ -42,10 +48,9 @@ class Blockchain(object):
         return self.get(f'v1.0/hyperblock/by-nonce/{nonce}')
 
     def __get_tx(self, hash, sender):
-        if sender[:4] == 'erd1':
-            sender = sender[4:]
-
-        return self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
+        if sender != 'metachain':
+            return self.get(f'v1.0/transaction/{hash}?sender={sender}&withResults=true')
+        return self.get(f'v1.0/transaction/{hash}?withResults=true')
 
     def get_block_txs(self, nonce):
         resp = self.__get_block(nonce)
@@ -74,21 +79,14 @@ class Blockchain(object):
             callback(resp)
 
     def run(self):
-        lastNonce = Database().get_last_nonce()
-    
-        if not lastNonce:
-            resp = self.get('v1.0/network/status/4294967295')
-            lastNonce = resp['data']['status']['erd_highest_final_nonce']
-    
-
         while True:
             resp = self.get('v1.0/network/status/4294967295')
             nonce = resp['data']['status']['erd_highest_final_nonce']
 
-            for currentNonce in range(lastNonce + 1, nonce + 1):
+            for currentNonce in range(self.last_nonce + 1, nonce + 1):
                 self.__fetch(currentNonce)
             
-            lastNonce = nonce
+            self.last_nonce = nonce
             Database().save_last_nonce(nonce)
             time.sleep(5)
         
