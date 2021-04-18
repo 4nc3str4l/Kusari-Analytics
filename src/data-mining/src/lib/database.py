@@ -9,15 +9,28 @@ class Database(object, metaclass=ThreadedSingleton):
         self.db = self.client.kusari
 
     def get_last_nonce(self, default=None):
-        nonce = self.db.config.find_one({
+        obj = self.db.config.find_one({
             '_id': 'nonce'
         })
-        return nonce or default
+        return obj['value'] or default
 
     def save_last_nonce(self, nonce):
         self.db.config.update_one({'_id': 'none'}, {
             '$set': {
                 'value': nonce
             }
+        }, upsert=True)
+
+    def get_last_wealth_nonce(self, default=0):
+        obj = self.db.config.find_one({
+            '_id': 'wealth_nonce'
         })
-    
+        return obj['value'] or default
+
+    def save_last_wealth_nonce(self, nonce):
+        self.db.config.update_one({'_id': 'wealth_nonce'}, {
+            '$set': {
+                'value': nonce
+            }
+        }, upsert=True)
+
