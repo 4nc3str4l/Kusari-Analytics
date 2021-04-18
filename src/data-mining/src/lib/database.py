@@ -1,11 +1,11 @@
 from .singleton import ThreadedSingleton
 
-from pymongo import MongoClient
+import pymongo
 
 
 class Database(object, metaclass=ThreadedSingleton):
     def __init__(self):
-        self.client = MongoClient('mongo-data-mining')
+        self.client = pymongo.MongoClient('mongo-data-mining')
         self.db = self.client.kusari
 
     def get_last_nonce(self, default=None):
@@ -34,3 +34,25 @@ class Database(object, metaclass=ThreadedSingleton):
             }
         }, upsert=True)
 
+    def increase_address_balance(self, address, amount):
+        return self.db.addresses.find_one_and_update({'_id': address}, {
+            '$inc': {
+                'balance': amount
+            }
+        })
+
+    def decrease_address_balance(self, address, amount):
+        return self.db.addresses.update_one({'_id': address}, {
+            '$inc': {
+                'balance': -amount
+            }
+        })
+
+    def get_top_holder_at_position(self, position):
+        cursor = self.db.addresses.find({
+            'balance': {
+                '$gt': 0
+            }
+        }).sort({'balance': pymongo.DESCENDING}).skip(position - 1).limit(1)
+
+        return next(cursor, None)

@@ -38,14 +38,23 @@ class Blockchain(object):
             # catastrophic error. bail.
             raise SystemExit(e)
 
+    def __get_block(self, nonce):
+        return self.get(f'v1.0/hyperblock/by-nonce/{nonce}')
+
+    def __get_tx(self, hash, sender):
+        if sender[:4] == 'erd1':
+            sender = sender[4:]
+
+        return self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
+
     def get_block_txs(self, nonce):
-        resp = self.get(f'v1.0/hyperblock/by-nonce/{nonce}')
+        resp = self.__get_block(nonce)
         for tx in resp['data']['hyperblock']['transactions']:
-            tx = self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
+            tx = self.__get_tx(tx['hash'], tx['sender'])
             yield tx
 
     def __process(self, tx):
-        resp = self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
+        resp = self.__get_tx(tx['hash'], tx['sender'])
         for callback in self._on_tx:
             callback(resp)
 
@@ -53,7 +62,7 @@ class Blockchain(object):
         logger.info('Fetching %d', nonce)
 
         # Get block, call callbacks
-        resp = self.get(f'v1.0/hyperblock/by-nonce/{nonce}')
+        resp = self.__get_block(nonce)
         for callback in self._on_block:
             callback(resp)
 
