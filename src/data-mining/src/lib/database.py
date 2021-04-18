@@ -12,7 +12,7 @@ class Database(object, metaclass=ThreadedSingleton):
         obj = self.db.config.find_one({
             '_id': 'nonce'
         })
-        return obj['value'] or default
+        return default if obj is None else obj['value']
 
     def save_last_nonce(self, nonce):
         self.db.config.update_one({'_id': 'none'}, {
@@ -25,7 +25,7 @@ class Database(object, metaclass=ThreadedSingleton):
         obj = self.db.config.find_one({
             '_id': 'wealth_nonce'
         })
-        return obj['value'] or default
+        return default if obj is None else obj['value']
 
     def save_last_wealth_nonce(self, nonce):
         self.db.config.update_one({'_id': 'wealth_nonce'}, {

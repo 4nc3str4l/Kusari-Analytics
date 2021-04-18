@@ -26,6 +26,7 @@ class Blockchain(object):
         if retries >= 3:
             raise RuntimeError('Exceeded maximum retries')
         
+        logger.debug(f'Querying {path}')
         try:
             url = f'http://{self.server_ip}:{self.server_port}/{path}'
             return requests.get(url).json()
@@ -37,12 +38,18 @@ class Blockchain(object):
             # catastrophic error. bail.
             raise SystemExit(e)
 
-    def process(self, tx):
+    def get_block_txs(self, nonce):
+        resp = self.get(f'v1.0/hyperblock/by-nonce/{nonce}')
+        for tx in resp['data']['hyperblock']['transactions']:
+            tx = self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
+            yield tx
+
+    def __process(self, tx):
         resp = self.get(f'v1.0/transaction/{tx["hash"]}?sender={tx["sender"]}&withResults=true')
         for callback in self._on_tx:
             callback(resp)
 
-    def fetch(self, nonce):
+    def __fetch(self, nonce):
         logger.info('Fetching %d', nonce)
 
         # Get block, call callbacks
@@ -52,7 +59,7 @@ class Blockchain(object):
 
         for tx in resp['data']['hyperblock']['transactions']:
             logger.debug('\tHas tx %s', tx['hash'])
-            self.process(tx)
+            self.__process(tx)
 
         for callback in self._after_block:
             callback(resp)
@@ -70,7 +77,7 @@ class Blockchain(object):
             nonce = resp['data']['status']['erd_highest_final_nonce']
 
             for currentNonce in range(lastNonce + 1, nonce + 1):
-                self.fetch(currentNonce)
+                self.__fetch(currentNonce)
             
             lastNonce = nonce
             Database().save_last_nonce(nonce)
