@@ -13,7 +13,7 @@ def roll_list(lst: list, now: Union[float, None], period):
     if now:
         lst.append(now)
 
-    while lst[0] < now - period:
+    while lst and lst[0] < now - period:
         lst.pop(0)
 
 
@@ -44,7 +44,7 @@ class Transactions(object):
         # If there are no transactions in the block, set
         #   now to None, which will only roll the list but
         #   not at any entry
-        if not resp['data']['hyperblock']['transactions']:
+        if not block['data']['hyperblock']['transactions']:
             now = None
         
         roll_list(self.rolling_24_non_empty_blocks, now, ROLL_24H)
